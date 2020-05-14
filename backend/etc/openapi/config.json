@@ -1,0 +1,6 @@
+{
+  "library": "spring-mvc",
+  "modelPackage": "jp.co.gxp.sample.backend.controller.model",
+  "apiPackage": "jp.co.gxp.sample.backend.controller",
+  "invokerPackage": "jp.co.gxp.sample.backend.controller"
+}

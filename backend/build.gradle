@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.2.7.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 	id 'java'
+	id 'org.hidetake.swagger.generator' version '2.18.2'
 }
 
 group = 'jp.co.gxp.sample'
@@ -25,8 +26,26 @@ dependencies {
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
+
+	// swagger関連
+	swaggerCodegen 'org.openapitools:openapi-generator-cli:4.2.3'
+	swaggerUI 'org.webjars:swagger-ui:3.24.3'
+	implementation 'io.springfox:springfox-swagger2:2.9.2'
+	implementation 'io.springfox:springfox-swagger-ui:2.9.2'
+
 }
 
 test {
 	useJUnitPlatform()
 }
+
+swaggerSources {
+	api {
+		inputFile = file('etc/openapi/apispec.yaml')
+		code {
+			language = 'spring'
+			configFile = file('etc/openapi/config.json')
+		}
+	}
+}
+
