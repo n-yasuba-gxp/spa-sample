@@ -1,6 +1,6 @@
 # Vue.js + SpringBoot のサンプルSPAアプリ
 
-## アーキテクチャ
+## 全体アーキテクチャ
 
 * SPAのファイルはSpringBootでホストして提供する構成とする
 
@@ -25,8 +25,8 @@ docker build -t frontend-yarn ./frontend-build
 # 依存ライブラリのインストール（= yarn install)
 docker run -it --rm -v $(pwd)/frontend-app:/app frontend-build install
 
-# ローカル実行(= yarn serve) http://localhost:8000 でアクセス可能
-docker run -it --rm -v $(pwd)/frontend-app:/app -p 8000:8000 frontend-build serve
+# ローカル実行(= yarn serve) http://localhost:8001 でアクセス可能
+docker run -it --rm -v $(pwd)/frontend-app:/app -p 8001:8000 frontend-build serve
 
 # ビルド(= yarn build)
 docker run -it --rm -v $(pwd)/frontend-app:/app frontend-build build
@@ -35,6 +35,28 @@ docker run -it --rm -v $(pwd)/frontend-app:/app frontend-build build
 docker run -it --rm -v $(pwd)/frontend-app:/app --entrypoint="/bin/sh" frontend-build
 ```
 
+---
+
 ## バックエンド
 
-未
+### 環境
+
+* Java11
+* SpringBoot2.2
+
+
+### ビルド実行コマンド
+
+```
+cd backend
+
+# フロントエンドのビルド成果物をコピー
+rm -fr src/main/resources/static/ && cp -r ../frontend-app/dist/ src/main/resources/static
+
+# ローカル起動 http://localhost:8002 
+./gradlew clean bootRun
+
+# jarファイル作成して jarをそのまま実行することも可能 http://localhost:8002
+./gradlew clean build
+java -jar build/libs/backend-0.1.0.jar
+```
