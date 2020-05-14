@@ -32,7 +32,11 @@ docker run -it --rm -v $(pwd)/frontend-app:/app -p 8001:8000 frontend-build serv
 docker run -it --rm -v $(pwd)/frontend-app:/app frontend-build build
 
 # コンテナに入って手動でコマンドを叩く場合
-docker run -it --rm -v $(pwd)/frontend-app:/app --entrypoint="/bin/sh" frontend-build
+docker run -it --rm -v $(pwd)/frontend-app:/app -v $(pwd)/backend/etc/openapi:/openapi --entrypoint="/bin/sh" frontend-build
+
+# openapiのyamlからコードを生成する場合
+docker run --rm -v $(pwd)/frontend-app:/app -v $(pwd)/backend/etc/openapi:/openapi openapitools/openapi-generator-cli generate \
+     -g typescript-axios -i /openapi/apispec.yaml -o /app/src/openapi
 ```
 
 ---
